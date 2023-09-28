@@ -1,6 +1,6 @@
 /**
  * A Manager is a subclass of {@link User} and has the most permissions over the app</li>
- * <ul> 
+ * <ul><ul>
  *     <li>A manager can view sign-up workflow</li>
  *     <li>Approve Users who signed up to create their accounts. </li>
  *     <li>Approve {@link Lecturer}s who signed up to create their account.</li>
@@ -15,7 +15,7 @@
  *     <li>Display course details</li>
  *     <li>Display module details</li>
  *     <li>Update course information</li>
- * </ul>
+ * </ul></ul>
  *
  * @see User
  * @see Lecturer
