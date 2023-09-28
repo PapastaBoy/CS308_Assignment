@@ -13,3 +13,8 @@ public class User {
         this.password = password;
     }
 }
+
+//TODO: password maker
+//TODO: sign up
+//TODO: login
+//TODO: update password
