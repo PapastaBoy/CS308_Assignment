@@ -16,6 +16,11 @@
  *     <li>Display module details</li>
  *     <li>Update course information</li>
  * </ul>
+ *
+ * @see User
+ * @see Lecturer
+ * @see Student
+ * @author Connor
  */
 public class Manager extends User{
     public Manager(String email, String password) {
