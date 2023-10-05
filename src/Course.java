@@ -6,6 +6,8 @@ import java.util.ArrayList;
  *
  * @see Module
  */
+
+ 
 public class Course {
     ArrayList<Module> modules = new ArrayList<>();
     String code;
