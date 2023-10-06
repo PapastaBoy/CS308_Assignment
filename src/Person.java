@@ -21,8 +21,8 @@ public class Person extends User{
     String secondName;
     String gender;
     Date DOB;
-    public Person(String email, String password, String firstName, String secondName, String gender, Date DOB) {
-        super(email, password);
+    public Person(String email,String firstName, String secondName, String gender, Date DOB) {
+        super(email);
         this.firstName = firstName;
         this.secondName = secondName;
         this.gender = gender;

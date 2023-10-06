@@ -23,8 +23,8 @@
  * @author Connor
  */
 public class Manager extends User{
-    public Manager(String email, String password) {
-        super(email, password);
+    public Manager(String email) {
+        super(email);
     }
 }
 

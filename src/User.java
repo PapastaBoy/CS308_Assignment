@@ -1,3 +1,5 @@
+import org.jetbrains.annotations.NotNull;
+
 import java.util.Scanner;
 
 /**
@@ -9,12 +11,22 @@ import java.util.Scanner;
  */
 public class User {
     String email;
-    String password;
-    public User(String email, String password) {
+    private String password;
+    public User(String email) {
         this.email = email;
         this.password = passwordMaker();
     }
 
+    /**
+     * This function is used to ask the user to enter their password
+     * then check to see if their password meets minimum requirements;
+     * checks user password and their recollection of their password
+     * to ensure security.
+     *
+     * @return {@link String} password
+     * @see Scanner
+     * @see User#checkPass(String)
+     */
     public String passwordMaker() {
         Scanner scanner = new Scanner(System.in);
         System.out.println("Password must contain:\n" +
@@ -43,7 +55,14 @@ public class User {
         }
     }
 
-    private boolean checkPass(String password) {
+    /**
+     * checks the password using <a href="https://en.wikipedia.org/wiki/Regular_expression">regex</a>
+     * to ensure that all requirements are met then ensure the user can recall their password
+     *
+     * @param password
+     * @return boolean
+     */
+    private boolean checkPass(@NotNull String password) {
         // check for 8 or more chars
         if (!password.matches(".{8,}+")) {
             System.out.println("Password must contain at least 8 characters");
@@ -65,6 +84,14 @@ public class User {
             return false;
         }
         return true;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public String getEmail() {
+        return email;
     }
 }
 

@@ -21,8 +21,8 @@ import java.util.Date;
 public class Student extends Person{
     int labMark;
     int examMark;
-    public Student(String email, String password, String firstName, String secondName, String gender, Date DOB) {
-        super(email, password, firstName, secondName, gender, DOB);
+    public Student(String email, String firstName, String secondName, String gender, Date DOB) {
+        super(email,firstName, secondName, gender, DOB);
     }
 }
 

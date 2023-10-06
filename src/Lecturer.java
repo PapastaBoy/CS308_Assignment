@@ -16,8 +16,8 @@ import java.util.Date;
  * @see Student
  */
 public class Lecturer extends Person{
-    public Lecturer(String email, String password, String firstName, String secondName, String gender, Date DOB) {
-        super(email, password, firstName, secondName, gender, DOB);
+    public Lecturer(String email,String firstName, String secondName, String gender, Date DOB) {
+        super(email, firstName, secondName, gender, DOB);
     }
 }
 
