@@ -18,9 +18,6 @@ import java.util.Date;
  */
 
 
- // testing hahahaha
-
- 
 public class Person extends User{
     String firstName;
     String secondName;
