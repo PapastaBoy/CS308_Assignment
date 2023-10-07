@@ -1,5 +1,7 @@
-import org.jetbrains.annotations.NotNull;
+//import org.jetbrains.annotations.NotNull;
 
+import java.io.Console;
+import java.util.Arrays;
 import java.util.Scanner;
 
 /**
@@ -29,29 +31,33 @@ public class User {
      */
     public String passwordMaker() {
         Scanner scanner = new Scanner(System.in);
+
         System.out.println("Password must contain:\n" +
                 " • at least 8 Characters\n" +
                 " • at least 1 Capital Letter\n" +
                 " • at least 1 Number\n" +
                 " • at least 1 special character");
         System.out.print("Please enter password: ");
+
         String password = scanner.nextLine();
 
         // check password for security and confirmation
         while (true) {
             while (!checkPass(password)) {
-                System.out.println("Please enter password: ");
+                System.out.print("Please enter password: ");
                 password = scanner.nextLine();
             }
 
             // confirm the user knows their password
-            System.out.println("Confirm password: ");
+            System.out.print("Confirm password: ");
             String pass2 = scanner.nextLine();
             if (pass2.equals(password)) {
                 System.out.println("Password entered correctly");
                 System.out.println("Successfully created password");
                 return password;
             }
+            password = "";
+            System.out.println("Password entered incorrectly, please enter again: ");
         }
     }
 
@@ -62,24 +68,24 @@ public class User {
      * @param password
      * @return boolean
      */
-    private boolean checkPass(@NotNull String password) {
+    private boolean checkPass(String password) {
         // check for 8 or more chars
         if (!password.matches(".{8,}+")) {
             System.out.println("Password must contain at least 8 characters");
             return false;
         }
         // check for capital letters
-        if (!password.matches("[A-Z]+")) {
+        if (!password.matches(".*[A-Z]+.*")) {
             System.out.println("Password must contain at least 1 capital letter");
             return false;
         }
         // check for number
-        if (!password.matches("[0-9]+")) {
+        if (!password.matches(".*[0-9]+.*")) {
             System.out.println("Password must contain at least 1 number");
             return false;
         }
         // check for symbols
-        if(!password.matches("[!%$?#£*&()^]+")) {
+        if (!password.matches(".*[!%$?#£*&()^]+.*")) {
             System.out.println("Password must contain at least 1 special character \n ( !%$?#£*&()^ )");
             return false;
         }

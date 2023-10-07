@@ -28,17 +28,17 @@ public class Manager extends User{
     }
 }
 
-//TODO A manager can view sign-up workflow
-//TODO Approve Users who signed up to create their accounts.
-//TODO Approve Lecturers who signed up to create their account.
-//TODO Manage other Users accounts
-//TODO Assign a module to a given Lecturer.
-//TODO Enrol Student in a given course.
-//TODO Issue Student decision
-//TODO Add a business rule
-//TODO Add new course
-//TODO Add module
-//TODO Assign module to course
-//TODO Display course details
-//TODO Display module details
-//TODO Update course information
+//TODO: A manager can view sign-up workflow
+//TODO: Approve Users who signed up to create their accounts.
+//TODO: Approve Lecturers who signed up to create their account.
+//TODO: Manage other Users accounts
+//TODO: Assign a module to a given Lecturer.
+//TODO: Enrol Student in a given course.
+//TODO: Issue Student decision
+//TODO: Add a business rule
+//TODO: Add new course
+//TODO: Add module
+//TODO: Assign module to course
+//TODO: Display course details
+//TODO: Display module details
+//TODO: Update course information
