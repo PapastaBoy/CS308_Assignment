@@ -1,7 +1,3 @@
-//import org.jetbrains.annotations.NotNull;
-
-import java.io.Console;
-import java.util.Arrays;
 import java.util.Scanner;
 
 /**
@@ -13,10 +9,21 @@ import java.util.Scanner;
  */
 public class User {
     String email;
-    private String password;
+    private final String password;
     public User(String email) {
         this.email = email;
-        this.password = passwordMaker();
+        this.password = passwordMaker(new StringAsker(System.in, System.out));
+    }
+
+    /**
+     * Constructor used purely for JUnit Mockito testing
+     *
+     * @param email
+     * @param asker
+     */
+    public User(String email, StringAsker asker) {
+        this.email = email;
+        this.password = passwordMaker(asker);
     }
 
     /**
@@ -29,28 +36,27 @@ public class User {
      * @see Scanner
      * @see User#checkPass(String)
      */
-    public String passwordMaker() {
-        Scanner scanner = new Scanner(System.in);
+    public String passwordMaker(StringAsker asker) {
 
         System.out.println("Password must contain:\n" +
                 " • at least 8 Characters\n" +
                 " • at least 1 Capital Letter\n" +
                 " • at least 1 Number\n" +
                 " • at least 1 special character");
-        System.out.print("Please enter password: ");
 
-        String password = scanner.nextLine();
+        String password = asker.ask("Please enter password: ");
 
         // check password for security and confirmation
+        String password_check_message;
         while (true) {
-            while (!checkPass(password)) {
-                System.out.print("Please enter password: ");
-                password = scanner.nextLine();
+            password_check_message = checkPass(password);
+            while (!password_check_message.equals("valid")) {
+                password = asker.ask(password_check_message + ", Please try again: ");
+                password_check_message = checkPass(password);
             }
 
             // confirm the user knows their password
-            System.out.print("Confirm password: ");
-            String pass2 = scanner.nextLine();
+            String pass2 = asker.ask("Confirm password: ");
             if (pass2.equals(password)) {
                 System.out.println("Password entered correctly");
                 System.out.println("Successfully created password");
@@ -68,28 +74,24 @@ public class User {
      * @param password
      * @return boolean
      */
-    private boolean checkPass(String password) {
+    private String checkPass(String password) {
         // check for 8 or more chars
         if (!password.matches(".{8,}+")) {
-            System.out.println("Password must contain at least 8 characters");
-            return false;
+            return "Password must contain at least 8 characters";
         }
         // check for capital letters
         if (!password.matches(".*[A-Z]+.*")) {
-            System.out.println("Password must contain at least 1 capital letter");
-            return false;
+            return "Password must contain at least 1 capital letter";
         }
         // check for number
         if (!password.matches(".*[0-9]+.*")) {
-            System.out.println("Password must contain at least 1 number");
-            return false;
+            return "Password must contain at least 1 number";
         }
         // check for symbols
         if (!password.matches(".*[!%$?#£*&()^]+.*")) {
-            System.out.println("Password must contain at least 1 special character \n ( !%$?#£*&()^ )");
-            return false;
+            return "Password must contain at least 1 special character ( !%$?#£*&()^ )";
         }
-        return true;
+        return "valid";
     }
 
     public String getPassword() {
