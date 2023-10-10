@@ -1,4 +1,10 @@
+import java.math.BigInteger;
+import java.nio.charset.StandardCharsets;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.Scanner;
+
+import java.sql.*;
 
 /**
  * The user is the superclass that is used to describe all the users on the app. <br>
@@ -9,10 +15,16 @@ import java.util.Scanner;
  */
 public class User {
     String email;
-    private final String password;
+    private byte[] hashed_password;
+
+
     public User(String email) {
         this.email = email;
-        this.password = passwordMaker(new StringAsker(System.in, System.out));
+        try {
+            this.hashed_password = hash(passwordMaker(new StringAsker(System.in, System.out)));
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        }
     }
 
     /**
@@ -23,7 +35,12 @@ public class User {
      */
     public User(String email, StringAsker asker) {
         this.email = email;
-        this.password = passwordMaker(asker);
+        try {
+            this.hashed_password = hash(passwordMaker(asker));
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        }
+
     }
 
     /**
@@ -94,8 +111,43 @@ public class User {
         return "valid";
     }
 
+    /**
+     * Uses SHA-256 algorithm to hash the password to create a more secure version of the password for storing
+     *
+     * @param input
+     * @return {@link MessageDigest#digest(byte[])}
+     * @throws NoSuchAlgorithmException
+     */
+    private byte[] hash(String input) throws NoSuchAlgorithmException {
+        // Static getInstance method is called with hashing sha
+        MessageDigest md = MessageDigest.getInstance("SHA-256");
+
+        // digest() method called
+        // to calculate message digest of input and return array of byte
+        return md.digest(input.getBytes(StandardCharsets.UTF_8));
+    }
+
+    /**
+     * Converts the hashed password bye array into a comprehensible hexadecimal readout
+     *
+     * @param hash
+     * @return String value of the hashed password
+     */
+    private String toHexString(byte[] hash) {
+        BigInteger number = new BigInteger(1, hash);
+
+        StringBuilder hexString = new StringBuilder(number.toString(16));
+
+        while (hexString.length() < 64) {
+            hexString.insert(0, '0');
+        }
+
+        return hexString.toString();
+
+    }
+
     public String getPassword() {
-        return password;
+        return toHexString(hashed_password);
     }
 
     public String getEmail() {

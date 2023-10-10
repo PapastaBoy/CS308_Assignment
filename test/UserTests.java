@@ -5,6 +5,7 @@ import org.mockito.ArgumentCaptor;
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.util.List;
+import java.util.Objects;
 
 import static org.mockito.Mockito.*;
 
@@ -26,7 +27,7 @@ public class UserTests {
         System.setIn(sysInBackup);
 
         Assertions.assertEquals("strath.user.2023@uni.strath.ac.uk", testUser.getEmail());
-        Assertions.assertEquals("StrathTest12!", testUser.getPassword());
+        Assertions.assertNotEquals("", testUser.getPassword());
     }
 
     /**
@@ -62,6 +63,23 @@ public class UserTests {
         Assertions.assertTrue(values.contains("Please enter password: "));
         Assertions.assertTrue(values.contains("Password must contain at least 1 capital letter, Please try again: "));
         Assertions.assertTrue(values.contains("Confirm password: "));
+    }
+
+    /**
+     * Test for SHA-256 hashing is working
+     */
+    @Test
+    public void hashPassword() {
+        InputStream sysInBackup = System.in; // backup System.in to restore it later
+        ByteArrayInputStream in = new ByteArrayInputStream(("StrathTest12!\rStrathTest12!").getBytes());
+        System.setIn(in);
+
+        User testUser = new User("strath.user.2023@uni.strath.ac.uk");
+
+        System.setIn(sysInBackup);
+
+        Assertions.assertEquals("strath.user.2023@uni.strath.ac.uk", testUser.getEmail());
+        Assertions.assertEquals("70b65a25f2d326e055e831e37309a58b007889d2587932f8f092ae6656063c84", testUser.getPassword());
     }
 
 
