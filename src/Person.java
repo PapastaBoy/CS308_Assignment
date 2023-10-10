@@ -16,7 +16,7 @@ import java.util.Date;
  * @see Lecturer
  * @see Student
  */
-public class Person extends User{
+abstract public class Person extends User{
     String firstName;
     String secondName;
     String gender;

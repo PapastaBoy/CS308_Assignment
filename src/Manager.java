@@ -1,3 +1,5 @@
+import java.sql.SQLException;
+
 /**
  * A Manager is a subclass of {@link User} and has the most permissions over the app</li>
  * <ul><ul>
@@ -26,6 +28,16 @@ public class Manager extends User{
     public Manager(String email) {
         super(email);
     }
+
+    public Manager(String email, StringAsker asker) {
+        super(email, asker);
+    }
+
+    @Override
+    public void insert() throws SQLException {
+        super.insert("manager");
+    }
+
 }
 
 //TODO: A manager can view sign-up workflow

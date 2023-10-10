@@ -4,6 +4,7 @@ import org.mockito.ArgumentCaptor;
 
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
+import java.sql.SQLException;
 import java.util.List;
 import java.util.Objects;
 
@@ -22,7 +23,7 @@ public class UserTests {
         ByteArrayInputStream in = new ByteArrayInputStream(("StrathTest12!\rStrathTest12!").getBytes());
         System.setIn(in);
 
-        User testUser = new User("strath.user.2023@uni.strath.ac.uk");
+        User testUser = new Manager("strath.user.2023@uni.strath.ac.uk");
 
         System.setIn(sysInBackup);
 
@@ -53,7 +54,7 @@ public class UserTests {
         when(asker.ask("Password must contain at least 1 capital letter, Please try again: ")).thenReturn("StrathTest2023!");
         when(asker.ask("Confirm password: ")).thenReturn("StrathTest2023!");
 
-        User testUser = new User("strath.user.2023@uni.strath.ac.uk", asker);
+        User testUser = new Manager("strath.user.2023@uni.strath.ac.uk", asker);
 
         ArgumentCaptor<String> arguments = ArgumentCaptor.forClass(String.class);
         verify(asker, atLeastOnce()).ask(arguments.capture());
@@ -63,6 +64,7 @@ public class UserTests {
         Assertions.assertTrue(values.contains("Please enter password: "));
         Assertions.assertTrue(values.contains("Password must contain at least 1 capital letter, Please try again: "));
         Assertions.assertTrue(values.contains("Confirm password: "));
+        System.out.println(testUser.getPassword());
     }
 
     /**
@@ -74,7 +76,7 @@ public class UserTests {
         ByteArrayInputStream in = new ByteArrayInputStream(("StrathTest12!\rStrathTest12!").getBytes());
         System.setIn(in);
 
-        User testUser = new User("strath.user.2023@uni.strath.ac.uk");
+        User testUser = new Manager("strath.user.2023@uni.strath.ac.uk");
 
         System.setIn(sysInBackup);
 

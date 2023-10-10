@@ -13,10 +13,32 @@ import java.sql.*;
  * @see Manager
  * @see Person
  */
-public class User {
+public abstract class User {
     String email;
     private byte[] hashed_password;
 
+    // ****************** Database stuff ************************
+
+    String myDriver = "com.mysql.cj.jdbc.Driver";
+    String myUrl = "jdbc:mysql://localhost:3306/qhb21193";
+    {
+        try {
+            Class.forName(myDriver);
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+    }
+    Connection conn;
+
+    {
+        try {
+            conn = DriverManager.getConnection(myUrl, "qhb21193", "notmypassword");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    // **********************************************************
 
     public User(String email) {
         this.email = email;
@@ -41,6 +63,18 @@ public class User {
             e.printStackTrace();
         }
 
+    }
+
+    public void insert(String user_type) throws SQLException {
+        String sql = "insert into users (user_type, email, hashed_password)"
+                + "values(?, ?, ?)";
+
+        PreparedStatement ps = conn.prepareStatement(sql);
+        ps.setString(1, user_type);
+        ps.setString(2, email);
+        ps.setString(3, toHexString(hashed_password));
+
+        ps.execute();
     }
 
     /**
@@ -133,7 +167,7 @@ public class User {
      * @param hash
      * @return String value of the hashed password
      */
-    private String toHexString(byte[] hash) {
+    String toHexString(byte[] hash) {
         BigInteger number = new BigInteger(1, hash);
 
         StringBuilder hexString = new StringBuilder(number.toString(16));
@@ -153,6 +187,8 @@ public class User {
     public String getEmail() {
         return email;
     }
+
+    public abstract void insert() throws SQLException;
 }
 
 //TODO: sign up

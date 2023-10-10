@@ -1,3 +1,4 @@
+import java.sql.SQLException;
 import java.util.Date;
 
 /**
@@ -18,6 +19,11 @@ import java.util.Date;
 public class Lecturer extends Person{
     public Lecturer(String email,String firstName, String secondName, String gender, Date DOB) {
         super(email, firstName, secondName, gender, DOB);
+    }
+
+    @Override
+    public void insert() throws SQLException {
+
     }
 }
 
