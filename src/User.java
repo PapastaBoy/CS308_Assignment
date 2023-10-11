@@ -123,7 +123,7 @@ public abstract class User {
      * to ensure that all requirements are met then ensure the user can recall their password
      *
      * @param password
-     * @return boolean
+     * @return String
      */
     private String checkPass(String password) {
         // check for 8 or more chars
@@ -141,6 +141,10 @@ public abstract class User {
         // check for symbols
         if (!password.matches(".*[!%$?#£*&()^]+.*")) {
             return "Password must contain at least 1 special character ( !%$?#£*&()^ )";
+        }
+        // limit length password
+        if (!password.matches(".{8,64}")) {
+            return "Password too long, cannot be longer than 64 characters";
         }
         return "valid";
     }
